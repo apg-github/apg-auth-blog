@@ -13,16 +13,21 @@ auth.onAuthStateChanged(async (user) => {
 const signupForm = document.querySelector("#signup-form");
 signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  showProgressBar();
-  const email = signupForm["signup-email"].value;
-  const password = signupForm["signup-password"].value;
+  try {
+    showProgressBar("signup-progress");
+    const email = signupForm["signup-email"].value;
+    const password = signupForm["signup-password"].value;
 
-  await auth.createUserWithEmailAndPassword(email, password);
-  hideProgressBar();
+    await auth.createUserWithEmailAndPassword(email, password);
 
-  const modal = document.querySelector("#modal-signup");
-  M.Modal.getInstance(modal).close();
-  signupForm.reset();
+    const modal = document.querySelector("#modal-signup");
+    M.Modal.getInstance(modal).close();
+  } catch (e) {
+    console.log(e);
+  } finally {
+    hideProgressBar("signup-progress");
+    signupForm.reset();
+  }
 });
 
 const logout = document.querySelector("#logout");
@@ -35,16 +40,21 @@ const loginForm = document.querySelector("#login-form");
 
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  showProgressBar("login-progress");
-  const email = loginForm["login-email"].value;
-  const password = loginForm["login-password"].value;
+  try {
+    showProgressBar("login-progress");
+    const email = loginForm["login-email"].value;
+    const password = loginForm["login-password"].value;
 
-  await auth.signInWithEmailAndPassword(email, password);
-  hideProgressBar("login-progress");
+    await auth.signInWithEmailAndPassword(email, password);
 
-  const modal = document.querySelector("#modal-login");
-  M.Modal.getInstance(modal).close();
-  signupForm.reset();
+    const modal = document.querySelector("#modal-login");
+    M.Modal.getInstance(modal).close();
+  } catch (e) {
+    console.log(e);
+  } finally {
+    hideProgressBar("login-progress");
+    loginForm.reset();
+  }
 });
 
 const createForm = document.querySelector("#create-form");
@@ -62,11 +72,11 @@ createForm.addEventListener("submit", async (e) => {
 
     const modal = document.querySelector("#modal-create");
 
-    hideProgressBar("create-docs-progress");
     M.Modal.getInstance(modal).close();
-    createForm.reset();
   } catch (e) {
     console.log(e);
   } finally {
+    hideProgressBar("create-docs-progress");
+    createForm.reset();
   }
 });
