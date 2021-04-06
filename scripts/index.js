@@ -36,7 +36,7 @@ const setupDocs = (data) => {
     });
     docsList.innerHTML = html;
   } else {
-    docsList.innerHTML = `<h5 class="center-align">Login to see stored docs</h5> "`;
+    docsList.innerHTML = `<h4 class="center-align">Login to see stored docs</h4>`;
   }
 };
 
