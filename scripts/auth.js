@@ -4,7 +4,6 @@ auth.onAuthStateChanged(async (user) => {
     setupDocs(docs.docs);
     setupUI(user);
   } else {
-    console.log(user);
     setupDocs([]);
     setupUI();
   }
@@ -18,7 +17,11 @@ signupForm.addEventListener("submit", async (e) => {
     const email = signupForm["signup-email"].value;
     const password = signupForm["signup-password"].value;
 
-    await auth.createUserWithEmailAndPassword(email, password);
+    const credentialsOfNewUser = await auth.createUserWithEmailAndPassword(email, password);
+    console.log(credentialsOfNewUser);
+    await db.collection("users").doc(credentialsOfNewUser.user.uid).set({
+      bio: signupForm["signup-bio"].value,
+    });
 
     const modal = document.querySelector("#modal-signup");
     M.Modal.getInstance(modal).close();

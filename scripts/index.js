@@ -1,9 +1,25 @@
 const docsList = document.querySelector(".guides");
 const userLoggedOutLinks = document.querySelectorAll(".logged-out");
 const userLoggedInLinks = document.querySelectorAll(".logged-in");
+const accountDetails = document.querySelector(".account-details");
 
-const setupUI = (user) => {
+const setupUI = async (user) => {
   if (user) {
+    const userDatabaseObject = await db.collection("users").doc(user.uid).get();
+
+    accountDetails.innerHTML = `
+    <div>
+      <h5>Logged in as ${user.email}</h5>
+      <h6>Email verified: ${user.emailVerified}</h6>
+      <p>
+      User bio: ${userDatabaseObject.data().bio}
+      </br>
+      Last login: ${user.metadata.creationTime}
+      </br>
+      Account created: ${user.metadata.lastSignInTime}
+      </p>
+    </div>`;
+
     userLoggedOutLinks.forEach((link) => {
       link.style.display = "none";
     });
@@ -11,6 +27,8 @@ const setupUI = (user) => {
       link.style.display = "block";
     });
   } else {
+    accountDetails.innerHTML = "";
+
     userLoggedOutLinks.forEach((link) => {
       link.style.display = "block";
     });
