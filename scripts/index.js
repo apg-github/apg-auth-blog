@@ -60,7 +60,14 @@ const setupDocs = (data) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const modals = document.querySelectorAll(".modal");
-  M.Modal.init(modals);
+  const modalOptions = {
+    inDuration: 400, // Transition in duration
+    outDuration: 400, // Transition out duration
+    onOpenStart: (e) => {
+      e.querySelector(".modal-error").innerHTML = "";
+    },
+  };
+  M.Modal.init(modals, modalOptions);
 
   const items = document.querySelectorAll(".collapsible");
   M.Collapsible.init(items);

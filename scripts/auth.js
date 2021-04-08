@@ -9,9 +9,12 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
+const modalError = document.querySelector(".modal-error");
+
 const signupForm = document.querySelector("#signup-form");
 signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
+  console.log(e);
   try {
     showProgressBar("signup-progress");
     const email = signupForm["signup-email"].value;
@@ -25,8 +28,9 @@ signupForm.addEventListener("submit", async (e) => {
 
     const modal = document.querySelector("#modal-signup");
     M.Modal.getInstance(modal).close();
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
+    e.target.querySelector(".modal-error").innerHTML = error.message;
   } finally {
     hideProgressBar("signup-progress");
     signupForm.reset();
@@ -52,8 +56,9 @@ loginForm.addEventListener("submit", async (e) => {
 
     const modal = document.querySelector("#modal-login");
     M.Modal.getInstance(modal).close();
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
+    e.target.querySelector(".modal-error").innerHTML = error.message;
   } finally {
     hideProgressBar("login-progress");
     loginForm.reset();
@@ -63,7 +68,6 @@ loginForm.addEventListener("submit", async (e) => {
 const createForm = document.querySelector("#create-form");
 createForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-
   try {
     showProgressBar("create-docs-progress");
     await db.collection("docs").add({
@@ -76,8 +80,9 @@ createForm.addEventListener("submit", async (e) => {
     const modal = document.querySelector("#modal-create");
 
     M.Modal.getInstance(modal).close();
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
+    e.target.querySelector(".modal-error").innerHTML = error.message;
   } finally {
     hideProgressBar("create-docs-progress");
     createForm.reset();
