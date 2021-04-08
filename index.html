@@ -22,7 +22,7 @@
     <!-- NAVBAR -->
     <nav class="z-depth-0 grey lighten-4">
       <div class="nav-wrapper container">
-        <a href="#" class="brand-logo">
+        <a class="brand-logo">
           <img src="/images/30090022.png" style="width: 40px; margin-top: 10px" />
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -62,10 +62,14 @@
             <label for="signup-password">Choose password</label>
           </div>
           <div class="input-field">
+            <input type="password" id="signup-confirm-password" required />
+            <label for="signup-password">Confirm password</label>
+          </div>
+          <div class="input-field">
             <input type="text" id="signup-bio" required />
             <label for="signup-bio">Catch phrase - one line bio</label>
           </div>
-          <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+          <button class="btn green darken-2 z-depth-0">Sign up</button>
           <div style="padding-top: 10px" class="modal-error red-text text-darken-2"></div>
         </form>
         <div id="signup-progress" class="progress hide">
@@ -88,7 +92,7 @@
             <input type="password" id="login-password" required />
             <label for="login-password">Your password</label>
           </div>
-          <button class="btn yellow darken-2 z-depth-0">Login</button>
+          <button class="btn green darken-2 z-depth-0">Login</button>
           <div style="padding-top: 10px" class="modal-error red-text text-darken-2"></div>
         </form>
         <div id="login-progress" class="progress hide">
@@ -120,7 +124,7 @@
             <textarea id="content" class="materialize-textarea" required></textarea>
             <label for="content">Doc Content</label>
           </div>
-          <button class="btn yellow darken-2 z-depth-0">Create</button>
+          <button class="btn green darken-2 z-depth-0">Create</button>
           <div style="padding-top: 10px" class="modal-error red-text text-darken-2"></div>
         </form>
         <div id="create-docs-progress" class="progress hide">

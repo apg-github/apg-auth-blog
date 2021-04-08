@@ -14,11 +14,15 @@ const modalError = document.querySelector(".modal-error");
 const signupForm = document.querySelector("#signup-form");
 signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  console.log(e);
   try {
     showProgressBar("signup-progress");
     const email = signupForm["signup-email"].value;
     const password = signupForm["signup-password"].value;
+    const confirmPassword = signupForm["signup-confirm-password"].value;
+
+    if (password != confirmPassword) {
+      throw { message: "Passwords were not equal. Try again." };
+    }
 
     const credentialsOfNewUser = await auth.createUserWithEmailAndPassword(email, password);
     console.log(credentialsOfNewUser);
@@ -29,7 +33,6 @@ signupForm.addEventListener("submit", async (e) => {
     const modal = document.querySelector("#modal-signup");
     M.Modal.getInstance(modal).close();
   } catch (error) {
-    console.log(error);
     e.target.querySelector(".modal-error").innerHTML = error.message;
   } finally {
     hideProgressBar("signup-progress");
@@ -57,7 +60,6 @@ loginForm.addEventListener("submit", async (e) => {
     const modal = document.querySelector("#modal-login");
     M.Modal.getInstance(modal).close();
   } catch (error) {
-    console.log(error);
     e.target.querySelector(".modal-error").innerHTML = error.message;
   } finally {
     hideProgressBar("login-progress");
@@ -81,7 +83,6 @@ createForm.addEventListener("submit", async (e) => {
 
     M.Modal.getInstance(modal).close();
   } catch (error) {
-    console.log(error);
     e.target.querySelector(".modal-error").innerHTML = error.message;
   } finally {
     hideProgressBar("create-docs-progress");
