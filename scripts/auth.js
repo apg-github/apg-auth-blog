@@ -7,6 +7,9 @@ auth.onAuthStateChanged(async (user) => {
     setupDocs([]);
     setupUI();
   }
+  setTimeout(() => {
+    document.querySelector(".loader").classList.remove("active");
+  }, 1000);
 });
 
 const modalError = document.querySelector(".modal-error");
@@ -25,7 +28,7 @@ signupForm.addEventListener("submit", async (e) => {
     }
 
     const credentialsOfNewUser = await auth.createUserWithEmailAndPassword(email, password);
-    console.log(credentialsOfNewUser);
+
     await db.collection("users").doc(credentialsOfNewUser.user.uid).set({
       bio: signupForm["signup-bio"].value,
     });

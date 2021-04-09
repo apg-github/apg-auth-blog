@@ -46,13 +46,41 @@ const setupDocs = (data) => {
       const docs = element.data(); // retrieve data from db snapshots
       const li = `
         <li>
+        
           <div class="collapsible-header grey lighten-4">${docs.title}</div>
-          <div class="collapsible-body white"><span>${docs.content}</span></div>
+          <div class="collapsible-body white">
+            <span>${docs.content}</span>
+            <div class="divider"></div>
+            <br/>
+            <a href="#" class="edit-doc-btn waves-effect waves-light btn-small modal-trigger" data-target="modal-update">Edit</a>
+            <a class="delete-doc-btn waves-effect waves-light btn-small">Delete</a>
+          </div>
+          
         </li>
         `;
       html += li;
     });
     docsList.innerHTML = html;
+
+    // Deleting docs in firestore
+    document.querySelectorAll(".delete-doc-btn").forEach((btn) => {
+      btn.addEventListener("click", async (e) => {
+        const content = e.path[0].closest("div.collapsible-body").querySelector("span").innerHTML;
+        const docToDelete = await db.collection("docs").where("content", "==", content).get();
+        docToDelete.forEach((element) => {
+          element.ref.delete();
+        });
+        const docs = await db.collection("docs").get();
+        setupDocs(docs.docs);
+      });
+    });
+
+    // Updating docs in firestore
+    document.querySelectorAll(".edit-doc-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        console.log(e.path);
+      });
+    });
   } else {
     docsList.innerHTML = `<h4 class="center-align">Login to see stored docs</h4>`;
   }
