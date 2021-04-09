@@ -45,7 +45,7 @@ const setupDocs = (data) => {
     data.forEach((element) => {
       const docs = element.data(); // retrieve data from db snapshots
       const li = `
-        <li>
+        <li class="black-text">
         
           <div class="collapsible-header grey lighten-4">${docs.title}</div>
           <div class="collapsible-body white">
