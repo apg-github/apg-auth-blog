@@ -95,8 +95,26 @@ document.addEventListener("DOMContentLoaded", () => {
       e.querySelector(".modal-error").innerHTML = "";
     },
   };
+
   M.Modal.init(modals, modalOptions);
 
   const items = document.querySelectorAll(".collapsible");
   M.Collapsible.init(items);
+
+  const darkModeSwitch = document.querySelector(".dark-mode-switch input");
+  darkModeSwitch.addEventListener("click", () => {
+    const body = document.querySelector("body");
+
+    if (darkModeSwitch.checked) {
+      body.classList.add("white-text");
+      body.classList.remove("lighten-3");
+      body.classList.add("darken-3");
+      window.localStorage.setItem("dark-mode", "true");
+    } else {
+      body.classList.remove("white-text");
+      body.classList.remove("darken-3");
+      body.classList.add("lighten-3");
+      window.localStorage.setItem("dark-mode", "false");
+    }
+  });
 });

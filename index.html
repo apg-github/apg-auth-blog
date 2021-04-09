@@ -25,7 +25,8 @@
         <a class="brand-logo">
           <img src="/images/30090022.png" style="width: 40px; margin-top: 10px" />
         </a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+        <ul id="nav-mobile" class="right">
           <li class="logged-in" style="display: none">
             <a href="#" class="grey-text modal-trigger" data-target="modal-account">Account</a>
           </li>
@@ -42,6 +43,16 @@
           </li>
           <li class="logged-out" style="display: none">
             <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Sign up</a>
+          </li>
+          <li>
+            <!-- Dark Mode Switch -->
+            <div style="margin: 2px" class="switch dark-mode-switch">
+              <label>
+                Dark Mode
+                <input type="checkbox" />
+                <span class="lever"></span>
+              </label>
+            </div>
           </li>
           <div style="margin: 5px" class="loader preloader-wrapper normal active">
             <div class="spinner-layer spinner-green-only">
@@ -198,6 +209,21 @@
       const functions = firebase.functions();
 
       db.settings({ timestampsInSnapshots: true });
+
+      // Obtain dark mode settings from local storage
+      const darkModeSwitch = document.querySelector(".dark-mode-switch input");
+      const body = document.querySelector("body");
+      if (window.localStorage.getItem("dark-mode") === "true") {
+        darkModeSwitch.checked = true;
+        body.classList.add("white-text");
+        body.classList.remove("lighten-3");
+        body.classList.add("darken-3");
+      } else if (window.localStorage.getItem("dark-mode") === "false") {
+        darkModeSwitch.checked = false;
+        body.classList.remove("white-text");
+        body.classList.remove("darken-3");
+        body.classList.add("lighten-3");
+      }
     </script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
