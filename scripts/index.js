@@ -6,17 +6,20 @@ const loggedOutCardsContainer = document.querySelector(".logged-out-cards");
 const cards = loggedOutCardsContainer.querySelectorAll(".card");
 
 const setupCards = () => {
-  cards.forEach(async (card) => {
+  cards.forEach(async (card, i) => {
     const title = card.querySelector(".card-title");
     const content = card.querySelector("p");
     const action = card.querySelector(".card-action");
 
-    const cardData = await db.collection("cards").doc("1").get();
+    const cardData = await db
+      .collection("cards")
+      .doc((i + 1).toString()) // to match docId in firestore
+      .get();
     const data = await cardData.data();
 
-    title.innerHTML = data.title;
-    content.innerHTML = data.content;
-    action.innerHTML = data.action;
+    title.innerHTML = data.title ? data.title : "title";
+    content.innerHTML = data.content ? data.content : "content";
+    action.innerHTML = data.action ? data.action : "action";
 
     // initially is none
     card.style.display = "block";
