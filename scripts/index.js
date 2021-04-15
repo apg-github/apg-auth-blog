@@ -2,11 +2,32 @@ const docsList = document.querySelector(".guides");
 const userLoggedOutLinks = document.querySelectorAll(".logged-out");
 const userLoggedInLinks = document.querySelectorAll(".logged-in");
 const accountDetails = document.querySelector(".account-details");
+const loggedOutCardsContainer = document.querySelector(".logged-out-cards");
+const cards = loggedOutCardsContainer.querySelectorAll(".card");
+
+const setupCards = () => {
+  cards.forEach(async (card) => {
+    const title = card.querySelector(".card-title");
+    const content = card.querySelector("p");
+    const action = card.querySelector(".card-action");
+
+    const cardData = await db.collection("cards").doc("1").get();
+    const data = await cardData.data();
+
+    title.innerHTML = data.title;
+    content.innerHTML = data.content;
+    action.innerHTML = data.action;
+
+    // initially is none
+    card.style.display = "block";
+  });
+};
 
 const setupUI = async (user) => {
+  setupCards();
   if (user) {
     const userDatabaseObject = await db.collection("users").doc(user.uid).get();
-
+    loggedOutCardsContainer.style.display = "none";
     accountDetails.innerHTML = `
     <div>
       <h5>Logged in as ${user.email}</h5>
@@ -28,7 +49,7 @@ const setupUI = async (user) => {
     });
   } else {
     accountDetails.innerHTML = "";
-
+    loggedOutCardsContainer.style.display = "block";
     userLoggedOutLinks.forEach((link) => {
       link.style.display = "block";
     });
