@@ -15,6 +15,7 @@ const setupCards = () => {
       .collection("cards")
       .doc((i + 1).toString()) // to match docId in firestore
       .get();
+
     const data = await cardData.data();
 
     title.innerHTML = data.title ? data.title : "title";
@@ -53,6 +54,7 @@ const setupUI = async (user) => {
   } else {
     accountDetails.innerHTML = "";
     loggedOutCardsContainer.style.display = "block";
+
     userLoggedOutLinks.forEach((link) => {
       link.style.display = "block";
     });
@@ -132,11 +134,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (darkModeSwitch.checked) {
       body.classList.add("white-text");
       body.classList.remove("lighten-3");
-      body.classList.add("darken-3");
+      body.classList.add("darken-2");
       window.localStorage.setItem("dark-mode", "true");
     } else {
       body.classList.remove("white-text");
-      body.classList.remove("darken-3");
+      body.classList.remove("darken-2");
       body.classList.add("lighten-3");
       window.localStorage.setItem("dark-mode", "false");
     }
