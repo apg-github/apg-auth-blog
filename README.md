@@ -10,3 +10,5 @@ Login, sign in, logout functionalities
 
 functions of create, update, delete document
 
+# TODO
+mobile friendly
